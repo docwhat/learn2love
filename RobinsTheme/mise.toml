@@ -1,0 +1,3 @@
+[tasks.launch]
+run = "love --console {{config_root}}"
+
