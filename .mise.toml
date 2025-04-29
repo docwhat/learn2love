@@ -1,3 +1,6 @@
+[tools]
+"npm:@trunkio/launcher" = "latest"
+
 [tasks.lint]
 run = "script/trunk check --fix"
 
