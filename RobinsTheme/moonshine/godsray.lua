@@ -1,3 +1,4 @@
+---@diagnostic disable: unbalanced-assignments, deprecated
 --[[
 The MIT License (MIT)
 
@@ -34,10 +35,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-]]--
+]] --
 
 return function(moonshine)
-  local shader = love.graphics.newShader[[
+  local shader = love.graphics.newShader [[
     extern number exposure;
     extern number decay;
     extern number density;
@@ -64,29 +65,29 @@ return function(moonshine)
 
   local setters, light_position = {}
 
-  for _,k in ipairs{"exposure", "decay", "density", "weight"} do
+  for _, k in ipairs { "exposure", "decay", "density", "weight" } do
     setters[k] = function(v)
       shader:send(k, math.min(1, math.max(0, tonumber(v) or 0)))
     end
   end
 
   setters.light_position = function(v)
-    light_position = {unpack(v)}
+    light_position = { unpack(v) }
     shader:send("light_position", v)
   end
 
   setters.light_x = function(v)
     assert(type(v) == "number", "Invalid value for `light_x'")
-    setters.light_position{v, light_position[2]}
+    setters.light_position { v, light_position[2] }
   end
 
   setters.light_y = function(v)
     assert(type(v) == "number", "Invalid value for `light_y'")
-    setters.light_position{light_position[1], v}
+    setters.light_position { light_position[1], v }
   end
 
   setters.samples = function(v)
-    shader:send("samples", math.max(1,tonumber(v) or 1))
+    shader:send("samples", math.max(1, tonumber(v) or 1))
   end
 
   local defaults = {
@@ -94,11 +95,11 @@ return function(moonshine)
     decay = 0.95,
     density = 0.15,
     weight = 0.5,
-    light_position = {0.5,0.5},
+    light_position = { 0.5, 0.5 },
     samples = 70
   }
 
-  return moonshine.Effect{
+  return moonshine.Effect {
     name = "godsray",
     shader = shader,
     setters = setters,
