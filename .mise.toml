@@ -2,7 +2,7 @@
 "npm:@trunkio/launcher" = "latest"
 
 [tasks.lint]
-run = "script/trunk check --fix"
+run = "trunk check --fix"
 
 [tasks.fmt]
-run = "script/trunk fmt"
+run = "trunk fmt"
